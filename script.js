@@ -1,4 +1,6 @@
-// Données du jeu avec les coordonnées recalibrées
+// Empêche l'iPad de faire défiler la page quand on glisse une étiquette
+window.addEventListener('touchmove', function() {}, {passive: false});
+
 const locations = [
     { id: "suez", name: "Canal de Suez", t: 43.5, l: 56.5, info: "Relie Méditerranée et Mer Rouge. Vital pour le commerce Asie-Europe." },
     { id: "panama", name: "Canal de Panama", t: 55, l: 28, info: "Raccourcit la route entre l'Atlantique et le Pacifique." },
@@ -39,7 +41,9 @@ function init() {
         lb.id = loc.id;
         lb.draggable = true;
         lb.textContent = loc.name;
-        lb.addEventListener('dragstart', e => e.dataTransfer.setData('text/plain', e.target.id));
+        
+        // CORRECTION iPAD : On utilise 'text' au lieu de 'text/plain'
+        lb.addEventListener('dragstart', e => e.dataTransfer.setData('text', e.target.id));
         bank.appendChild(lb);
 
         const dz = document.createElement('div');
@@ -47,9 +51,13 @@ function init() {
         dz.style.top = loc.t + "%";
         dz.style.left = loc.l + "%";
         dz.dataset.target = loc.id;
+        
+        // CORRECTION iPAD : Ajout du dragenter avec preventDefault
+        dz.addEventListener('dragenter', e => e.preventDefault()); 
         dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('hover'); });
         dz.addEventListener('dragleave', () => dz.classList.remove('hover'));
         dz.addEventListener('drop', handleDrop);
+        
         map.appendChild(dz);
     });
 }
@@ -57,7 +65,9 @@ function init() {
 function handleDrop(e) {
     e.preventDefault();
     this.classList.remove('hover');
-    const id = e.dataTransfer.getData('text/plain');
+    
+    // CORRECTION iPAD : On récupère avec 'text'
+    const id = e.dataTransfer.getData('text');
     if(!id) return; 
     
     const loc = locations.find(l => l.id === id);
@@ -130,4 +140,3 @@ function useHint() {
 }
 
 init();
-
