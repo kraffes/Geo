@@ -1,11 +1,6 @@
 :root {
-    --bg: #1a1a2e;
-    --card: #16213e;
-    --accent: #4ecca3;
-    --text: #eeeeee;
-    --error: #e94560;
+    --bg: #1a1a2e; --card: #16213e; --accent: #4ecca3; --text: #eeeeee; --error: #e94560;
 }
-
 body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); margin: 0; text-align: center; }
 
 header { background: var(--card); padding: 1rem; border-bottom: 2px solid var(--accent); display: flex; justify-content: space-around; align-items: center; position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: 10px; }
@@ -20,9 +15,12 @@ header { background: var(--card); padding: 1rem; border-bottom: 2px solid var(--
 .label:active { cursor: grabbing; transform: scale(1.1); }
 
 #map-frame { 
-    position: relative; width: 100%; aspect-ratio: 2/1; background: #0f3460; border-radius: 12px; border: 2px solid #333; 
+    position: relative; width: 100%; 
+    aspect-ratio: 2754 / 1398; 
+    background-color: #0f3460; border-radius: 12px; border: 2px solid #333; 
     background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg'); 
-    background-size: cover; background-position: center;
+    background-size: 100% 100%; 
+    background-repeat: no-repeat;
 }
 
 .dropzone { 
@@ -30,13 +28,8 @@ header { background: var(--card); padding: 1rem; border-bottom: 2px solid var(--
     border: 2px dashed rgba(255,255,255,0.5); border-radius: 50%; transform: translate(-50%, -50%);
     display: flex; align-items: center; justify-content: center; transition: 0.3s;
 }
-
 .dropzone.hover { background: var(--accent); transform: translate(-50%, -50%) scale(1.3); }
-
-.dropzone.found { 
-    background: var(--accent); border: none; width: auto; height: auto; 
-    padding: 4px 10px; border-radius: 4px; font-size: 11px; color: var(--bg); font-weight: bold; 
-}
+.dropzone.found { background: var(--accent); border: none; width: auto; height: auto; padding: 4px 10px; border-radius: 4px; font-size: 11px; color: var(--bg); font-weight: bold; }
 
 #info-modal { 
     position: fixed; bottom: 20px; right: 20px; width: 280px; background: var(--card); 
@@ -44,18 +37,17 @@ header { background: var(--card); padding: 1rem; border-bottom: 2px solid var(--
     display: none; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 200;
 }
 
-/* Bouton SOS */
-#btn-sos {
-    background: var(--error); color: white; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.2s;
-}
+#btn-sos { background: var(--error); color: white; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.2s; }
 #btn-sos:hover { background: #c0392b; transform: scale(1.05); }
 #btn-sos:disabled { background: #7f8c8d; cursor: not-allowed; transform: none; }
 
-/* Animation de l'indice */
-@keyframes flashHint {
-    0% { background: rgba(255,255,255,0.2); transform: translate(-50%, -50%) scale(1); }
-    50% { background: #f1c40f; border-color: #f39c12; transform: translate(-50%, -50%) scale(2); box-shadow: 0 0 15px #f1c40f; }
-    100% { background: rgba(255,255,255,0.2); transform: translate(-50%, -50%) scale(1); }
+@keyframes flashHintZone {
+    0%, 100% { background: rgba(255,255,255,0.15); transform: translate(-50%, -50%) scale(1); }
+    50% { background: #f1c40f; border-color: #f39c12; transform: translate(-50%, -50%) scale(1.5); box-shadow: 0 0 15px #f1c40f; }
 }
-
-.hint-active { animation: flashHint 1s ease-in-out 3; z-index: 10; }
+@keyframes flashHintLabel {
+    0%, 100% { background: var(--accent); transform: scale(1); }
+    50% { background: #f1c40f; color: #1a1a2e; transform: scale(1.1); box-shadow: 0 0 15px #f1c40f; }
+}
+.dropzone.hint-active { animation: flashHintZone 1.5s ease-in-out 2; z-index: 10; }
+.label.hint-active { animation: flashHintLabel 1.5s ease-in-out 2; z-index: 10; }
