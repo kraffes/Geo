@@ -17,7 +17,7 @@ let foundCount = 0;
 let highscore = localStorage.getItem('geo-highscore') || 0;
 document.getElementById('high-score').textContent = highscore;
 
-// Timer
+// Gestion du Chronomètre
 const timerInterval = setInterval(() => {
     seconds++;
     document.getElementById('timer').textContent = seconds;
@@ -26,23 +26,29 @@ const timerInterval = setInterval(() => {
 const bank = document.getElementById('labels-bank');
 const map = document.getElementById('map-frame');
 
-// Initialisation des éléments
+// Fonction d'initialisation du jeu
 function init() {
     [...locations].sort(() => Math.random() - 0.5).forEach(loc => {
+        // Création des étiquettes
         const lb = document.createElement('div');
         lb.className = 'label';
         lb.id = loc.id;
         lb.draggable = true;
         lb.textContent = loc.name;
-        lb.ontouchstart = (e) => e.preventDefault(); // Support mobile basique
-        lb.addEventListener('dragstart', e => e.dataTransfer.setData('text', e.target.id));
+        
+        // Configuration du drag (texte plat pour compatibilité mobile)
+        lb.addEventListener('dragstart', e => {
+            e.dataTransfer.setData('text/plain', e.target.id);
+        });
         bank.appendChild(lb);
 
+        // Création des zones sur la carte
         const dz = document.createElement('div');
         dz.className = 'dropzone';
         dz.style.top = loc.t + "%";
         dz.style.left = loc.l + "%";
         dz.dataset.target = loc.id;
+        
         dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('hover'); });
         dz.addEventListener('dragleave', () => dz.classList.remove('hover'));
         dz.addEventListener('drop', handleDrop);
@@ -50,16 +56,22 @@ function init() {
     });
 }
 
+// Fonction gérant le moment où l'élève lâche une étiquette
 function handleDrop(e) {
     e.preventDefault();
     this.classList.remove('hover');
-    const id = e.dataTransfer.getData('text');
+    
+    // Récupère l'ID envoyé pendant le dragstart
+    const id = e.dataTransfer.getData('text/plain');
+    if(!id) return; // Sécurité
+    
     const loc = locations.find(l => l.id === id);
     
+    // Vérification de la réponse
     if (id === this.dataset.target) {
         this.classList.add('found');
         this.textContent = loc.name;
-        document.getElementById(id).style.visibility = 'hidden';
+        document.getElementById(id).style.display = 'none'; // Cache l'étiquette initiale
         showInfo(loc);
         updateScore(50);
         foundCount++;
@@ -69,17 +81,23 @@ function handleDrop(e) {
     }
 }
 
+// Affiche la petite fenêtre d'information pédagogique
 function showInfo(loc) {
     const modal = document.getElementById('info-modal');
     document.getElementById('modal-title').textContent = loc.name;
     document.getElementById('modal-desc').textContent = loc.info;
     modal.style.display = 'block';
+    
+    // Disparaît après 6 secondes
     setTimeout(() => modal.style.display = 'none', 6000);
 }
 
+// Met à jour les scores
 function updateScore(pts) {
     score = Math.max(0, score + pts);
     document.getElementById('score').textContent = score;
+    
+    // Sauvegarde du meilleur score
     if(score > highscore) {
         highscore = score;
         localStorage.setItem('geo-highscore', highscore);
@@ -87,11 +105,39 @@ function updateScore(pts) {
     }
 }
 
+// Vérifie si toutes les étiquettes sont placées
 function checkWin() {
     if(foundCount === locations.length) {
         clearInterval(timerInterval);
-        alert(`Terminé ! Score : ${score} en ${seconds}s. Tes révisions avancent bien !`);
+        document.getElementById('btn-sos').disabled = true; // Désactive le SOS
+        setTimeout(() => {
+            alert(`Terminé ! Score : ${score} en ${seconds}s. Tes révisions avancent bien !`);
+        }, 500);
     }
 }
 
+// Fonction du bouton SOS
+function useHint() {
+    // Cherche les zones qui n'ont pas encore la classe "found"
+    const unplacedZones = Array.from(document.querySelectorAll('.dropzone:not(.found)'));
+    if (unplacedZones.length === 0) return;
+
+    // Prend une zone au hasard et la fait clignoter
+    const randomZone = unplacedZones[Math.floor(Math.random() * unplacedZones.length)];
+    randomZone.classList.add('hint-active');
+    
+    setTimeout(() => {
+        randomZone.classList.remove('hint-active');
+    }, 3000);
+
+    updateScore(-20);
+    
+    // Si c'est la dernière zone, on désactive le bouton
+    if (unplacedZones.length === 1) {
+        document.getElementById('btn-sos').disabled = true;
+    }
+}
+
+// Lancement de l'application
 init();
+
