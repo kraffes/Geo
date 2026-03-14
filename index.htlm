@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GéoMaster : Mers et Océans</title>
     <link rel="stylesheet" href="style.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mobile-drag-drop@2.3.0-rc.2/default.css">
+    <script src="https://cdn.jsdelivr.net/npm/mobile-drag-drop@2.3.0-rc.2/index.min.js"></script>
 </head>
 <body>
 
@@ -12,11 +15,12 @@
     <div class="stats-box">Score: <span id="score">0</span></div>
     <div class="stats-box">Record: <span id="high-score">0</span></div>
     <div class="stats-box">Chrono: <span id="timer">0</span>s</div>
+    <button id="btn-sos" onclick="useHint()">SOS Indice (-20 pts)</button>
 </header>
 
 <div class="container">
     <h1>GéoMaster : Mers et Océans ⚓</h1>
-    <p>Glissez les étiquettes sur les zones stratégiques pour gagner des points.</p>
+    <p>Glissez les étiquettes sur les zones stratégiques. Bloqué ? Utilisez le SOS !</p>
     
     <div id="labels-bank"></div>
     <div id="map-frame"></div>
@@ -27,6 +31,13 @@
     <p id="modal-desc"></p>
 </div>
 
+<script>
+    MobileDragDrop.polyfill({
+        dragImageTranslateOverride: MobileDragDrop.scrollBehaviourDragImageTranslateOverride
+    });
+</script>
+
 <script src="script.js"></script>
 </body>
 </html>
+
