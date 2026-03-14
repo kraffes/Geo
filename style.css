@@ -11,7 +11,14 @@ header { background: var(--card); padding: 1rem; border-bottom: 2px solid var(--
 
 #labels-bank { min-height: 100px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px 0; padding: 15px; background: var(--card); border-radius: 10px; }
 
-.label { padding: 8px 16px; background: var(--accent); color: var(--bg); font-weight: bold; border-radius: 4px; cursor: grab; transition: 0.2s; font-size: 0.9rem; touch-action: none; }
+.label { 
+    padding: 8px 16px; background: var(--accent); color: var(--bg); font-weight: bold; 
+    border-radius: 4px; cursor: grab; transition: 0.2s; font-size: 0.9rem; 
+    /* LES 3 LIGNES MAGIQUES POUR LE TACTILE */
+    touch-action: none; 
+    -webkit-user-select: none; 
+    user-select: none; 
+}
 .label:active { cursor: grabbing; transform: scale(1.1); }
 
 #map-frame { 
