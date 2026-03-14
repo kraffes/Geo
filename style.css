@@ -1,0 +1,45 @@
+:root {
+    --bg: #1a1a2e;
+    --card: #16213e;
+    --accent: #4ecca3;
+    --text: #eeeeee;
+    --error: #e94560;
+}
+
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); margin: 0; text-align: center; }
+
+header { background: var(--card); padding: 1rem; border-bottom: 2px solid var(--accent); display: flex; justify-content: space-around; align-items: center; position: sticky; top: 0; z-index: 100; }
+
+.container { max-width: 1000px; margin: auto; padding: 20px; }
+
+.stats-box { background: var(--bg); padding: 8px 15px; border-radius: 5px; border: 1px solid var(--accent); font-weight: bold; min-width: 100px; }
+
+#labels-bank { min-height: 100px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px 0; padding: 15px; background: var(--card); border-radius: 10px; }
+
+.label { padding: 8px 16px; background: var(--accent); color: var(--bg); font-weight: bold; border-radius: 4px; cursor: grab; transition: 0.2s; font-size: 0.9rem; }
+.label:active { cursor: grabbing; transform: scale(1.1); }
+
+#map-frame { 
+    position: relative; width: 100%; aspect-ratio: 2/1; background: #0f3460; border-radius: 12px; border: 2px solid #333; 
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg'); 
+    background-size: cover; background-position: center;
+}
+
+.dropzone { 
+    position: absolute; width: 24px; height: 24px; background: rgba(255,255,255,0.15); 
+    border: 2px dashed rgba(255,255,255,0.5); border-radius: 50%; transform: translate(-50%, -50%);
+    display: flex; align-items: center; justify-content: center; transition: 0.3s;
+}
+
+.dropzone.hover { background: var(--accent); transform: translate(-50%, -50%) scale(1.3); }
+
+.dropzone.found { 
+    background: var(--accent); border: none; width: auto; height: auto; 
+    padding: 4px 10px; border-radius: 4px; font-size: 11px; color: var(--bg); font-weight: bold; 
+}
+
+#info-modal { 
+    position: fixed; bottom: 20px; right: 20px; width: 280px; background: var(--card); 
+    border-left: 5px solid var(--accent); padding: 15px; border-radius: 5px; 
+    display: none; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 200;
+}
