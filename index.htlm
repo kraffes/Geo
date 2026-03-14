@@ -20,7 +20,7 @@
 
 <div class="container">
     <h1>GéoMaster : Mers et Océans ⚓</h1>
-    <p>Glissez les étiquettes sur les zones stratégiques. Bloqué ? Utilisez le SOS !</p>
+    <p>Glissez les étiquettes sur les zones stratégiques. Bloqué ? Utilisez le bouton SOS !</p>
     
     <div id="labels-bank"></div>
     <div id="map-frame"></div>
@@ -40,4 +40,3 @@
 <script src="script.js"></script>
 </body>
 </html>
-
