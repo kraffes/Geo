@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GéoMaster : Mers et Océans</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="stats-box">Score: <span id="score">0</span></div>
+    <div class="stats-box">Record: <span id="high-score">0</span></div>
+    <div class="stats-box">Chrono: <span id="timer">0</span>s</div>
+</header>
+
+<div class="container">
+    <h1>GéoMaster : Mers et Océans ⚓</h1>
+    <p>Glissez les étiquettes sur les zones stratégiques pour gagner des points.</p>
+    
+    <div id="labels-bank"></div>
+    <div id="map-frame"></div>
+</div>
+
+<div id="info-modal">
+    <strong id="modal-title"></strong>
+    <p id="modal-desc"></p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
